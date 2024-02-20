@@ -1,8 +1,15 @@
+import { AdjustOutlined } from "@mui/icons-material";
 import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const OrderCard = () => {
+  const navigate = useNavigate();
+
   return (
-    <div>
+    <div
+      onClick={() => navigate(`/account/order/${5}`)}
+      className=" p-5 shadow-md hover:shadow-2xl border shadow-black/50"
+    >
       <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
         <Grid item xs={6}>
           <div className="flex cursor-pointer">
@@ -25,9 +32,16 @@ const OrderCard = () => {
 
         <Grid item xs={4}>
           {true && (
-            <p>
-              <span>Delivered On March 03</span>
-            </p>
+            <div>
+              <p>
+                <AdjustOutlined
+                  sx={{ width: "15px", height: "15px" }}
+                  className=" text-green-600 mr-2"
+                />
+                <span>Delivered On March 03</span>
+              </p>
+              <p className="text-xs">Your Item Has Been Delivered</p>
+            </div>
           )}
           {false && (
             <p>
