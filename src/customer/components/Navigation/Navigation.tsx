@@ -24,7 +24,7 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
-  const auth = useAppSelector((state) => state.auth);
+  const {auth} = useAppSelector((state) => state);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -51,7 +51,7 @@ export default function Navigation() {
     item: any,
     close: any
   ) => {
-    navigate(`/${category.id}/${section.id}/${item.id}`);
+    navigate(`/${category.id}/${section.id}/${item.name}`);
     close();
   };
 
@@ -358,7 +358,7 @@ export default function Navigation() {
                                             className="font-medium text-gray-900"
                                           >
                                             {section.name}
-                                          </p>
+                                          </p> 
                                           <ul
                                             role="list"
                                             aria-labelledby={`${section.name}-heading`}

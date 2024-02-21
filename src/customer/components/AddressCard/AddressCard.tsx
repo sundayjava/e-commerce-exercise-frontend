@@ -1,12 +1,17 @@
-const AddressCard = () => {
+const AddressCard = (props: { address: any }) => {
   return (
     <div>
       <div className=" space-y-3">
-        <p className="font-semibold">Raam Kapoor</p>
-        <p>Mumbai, gokul dham market, 40001F</p>
+        <p className="font-semibold">
+          {props.address?.firstName + " " + props.address?.lastName}
+        </p>
+        <p>
+          {props.address?.state}, {props.address?.city}, &nbsp;
+          {props.address?.streetAddress}, {props.address?.zipCode}
+        </p>
         <div className=" space-y-3">
           <p className=" font-semibold">Phone Number</p>
-          <p>9079029135</p>
+          <p>{props.address?.mobile}</p>
         </div>
       </div>
     </div>

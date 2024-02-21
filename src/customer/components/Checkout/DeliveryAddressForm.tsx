@@ -1,21 +1,32 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import AddressCard from "../AddressCard/AddressCard";
+import { useAppDispatch } from "../../../state/hooks";
+import { createOrder } from "../../../state/order/Action";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate()
+
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
 
-    const address = {
+    const shippingAddress = {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       streetAddress: data.get("address"),
       city: data.get("city"),
       state: data.get("state"),
-      zip: data.get("zip"),
-      phoneNumber: data.get("phoneNumber"),
+      zipCode: data.get("zip"),
+      mobile: data.get("phoneNumber"),
     };
-    console.log("success", address);
+
+    const orderData = {
+      shippingAddress,navigate
+    }
+
+    dispatch(createOrder(orderData));
   };
 
   return (
@@ -27,7 +38,7 @@ const DeliveryAddressForm = () => {
           className="border rounded-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
           <div className="p-5 py-7 border-b cursor-pointer">
-            <AddressCard />
+            <AddressCard address={null}/>
             <Button
               sx={{ mt: 2, bgcolor: "RGB(145 85 253)" }}
               size="large"

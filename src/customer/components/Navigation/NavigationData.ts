@@ -90,6 +90,7 @@ export const navigation = {
             items: [
               { name: "Tops", href: "#" },
               { name: "Pants", href: "#" },
+              { name: "mens_kurts", href: "mens_kurts" },
               { name: "Sweaters", href: "#" },
               { name: "T-Shirts", href: "#" },
               { name: "Jackets", href: "#" },

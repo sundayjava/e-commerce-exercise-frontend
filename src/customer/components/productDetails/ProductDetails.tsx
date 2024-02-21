@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import React from "react";
 import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import { mens_kurta } from "../../../Data/mens_kurta";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
+import { findProductsById } from "../../../state/product/Action";
+import { addItemToCart } from "../../../state/cart/Action";
 
-const product = {
+const productda = {
   name: "Basic Tee 6-Pack",
   price: "$192",
   href: "#",
@@ -61,13 +64,25 @@ function classNames(...classes: string[]) {
 }
 
 export default function ProductDetails() {
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+  const [selectedSize, setSelectedSize] = useState(productda.sizes[2]);
   const [value, setValue] = React.useState<number | null>(2);
   const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const { product } = useAppSelector((state) => state);
 
   const handleAddToCart = () => {
+    const data = { productId: params.productId,
+    size:selectedSize.name
+    };
+    dispatch(addItemToCart(data));
     navigate("/cart");
   };
+
+  useEffect(() => {
+    const data = { productId: params.productId };
+    dispatch(findProductsById(data));
+  }, [params.productId]);
 
   return (
     <div className="bg-white lg:px-20">
@@ -77,7 +92,7 @@ export default function ProductDetails() {
             role="list"
             className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
           >
-            {product.breadcrumbs.map((breadcrumb) => (
+            {productda.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
                   <a
@@ -101,11 +116,11 @@ export default function ProductDetails() {
             ))}
             <li className="text-sm">
               <a
-                href={product.href}
+                href={productda.href}
                 aria-current="page"
                 className="font-medium text-gray-500 hover:text-gray-600"
               >
-                {product.name}
+                {productda.name}
               </a>
             </li>
           </ol>
@@ -116,13 +131,13 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                src={product.images[0].src}
-                alt={product.images[0].alt}
+                src={product.product?.imageUrl}
+                alt={`image-${product.product?.id}`}
                 className="h-full w-full object-cover object-center"
               />
             </div>
             <div className="flex flex-wrap space-x-5 justify-center">
-              {product.images.map((item) => (
+              {productda.images.map((item) => (
                 <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
                   <img
                     src={item.src}
@@ -138,10 +153,10 @@ export default function ProductDetails() {
           <div className="lg:col-span-1 maxt-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24">
             <div className="lg:col-span-2">
               <h1 className="text-lg lg:text-xl font-semibold text-gray-900">
-                UniversalOutfit
+                {product.product?.brand}
               </h1>
               <h1 className="text-lg lg:text-xl text-gray-900 opacity-60 pt-1">
-                Stylish Red & Silver Over-Ear Headphones
+                {product.product?.title}
               </h1>
             </div>
 
@@ -149,9 +164,15 @@ export default function ProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <div className="flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6">
-                <p className="font-semibold">$199</p>
-                <p className="opacity-50 line-through">$211</p>
-                <p className="text-green-600 font-semibold">5% off</p>
+                <p className="font-semibold">
+                  ${product.product?.discountedPrice}
+                </p>
+                <p className="opacity-50 line-through">
+                  ${product.product?.price}
+                </p>
+                <p className="text-green-600 font-semibold">
+                  {product.product?.discountPercent}% off
+                </p>
               </div>
 
               {/* Reviews */}
@@ -190,7 +211,7 @@ export default function ProductDetails() {
                       Choose a size
                     </RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                      {product.sizes.map((size) => (
+                      {productda.sizes.map((size: any) => (
                         <RadioGroup.Option
                           key={size.name}
                           value={size}
@@ -267,7 +288,7 @@ export default function ProductDetails() {
 
                 <div className="space-y-6">
                   <p className="text-base text-gray-900">
-                    {product.description}
+                    {product.product?.description}
                   </p>
                 </div>
               </div>
@@ -279,7 +300,7 @@ export default function ProductDetails() {
 
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                    {product.highlights.map((highlight) => (
+                    {productda.highlights.map((highlight) => (
                       <li key={highlight} className="text-gray-400">
                         <span className="text-gray-600">{highlight}</span>
                       </li>
@@ -292,7 +313,7 @@ export default function ProductDetails() {
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
                 <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">{product.details}</p>
+                  <p className="text-sm text-gray-600">{productda.details}</p>
                 </div>
               </div>
             </div>
