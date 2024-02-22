@@ -182,7 +182,7 @@ export default function ProductDetails() {
                     name="simple-controlled"
                     value={value}
                     onChange={(
-                      event: any,
+                      _event: any,
                       newValue: React.SetStateAction<number | null>
                     ) => {
                       setValue(newValue);

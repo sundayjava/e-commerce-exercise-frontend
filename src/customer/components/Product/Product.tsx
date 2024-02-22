@@ -1,4 +1,4 @@
-import React, { Fragment, Key, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -49,7 +49,7 @@ export default function Product() {
   const stock = searchParams.get("stock");
 
   const handlePaginationChanges = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     const searchParams = new URLSearchParams(location.search);

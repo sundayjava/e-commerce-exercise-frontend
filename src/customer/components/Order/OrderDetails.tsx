@@ -9,14 +9,14 @@ const OrderDetails = () => {
     <div className="lg:px-20 px-5">
       <div>
         <h1 className="font-bold text-xl py-10">Delivery Address</h1>
-        <AddressCard />
+        <AddressCard address={undefined} />
       </div>
       <div className="py-20">
         <OrderTracker activeStep={2} />
       </div>
 
       <Grid container className=" space-y-5">
-        {[1, 1, 1, 1].map((item) => (
+        {[1, 1, 1, 1].map((_item) => (
           <Grid
             item
             container

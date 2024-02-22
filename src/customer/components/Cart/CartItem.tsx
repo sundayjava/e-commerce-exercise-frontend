@@ -4,7 +4,7 @@ import {
 } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/material";
 import { useAppDispatch } from "../../../state/hooks";
-import { getCartItem, removeCartItem, updateCartItem } from "../../../state/cart/Action";
+import { removeCartItem, updateCartItem } from "../../../state/cart/Action";
 
 const CartItem = (props: { cartItem: any }) => {
   const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 import { getOrderById } from "../../../state/order/Action";
 import { updatePayment } from "../../../state/payment/Action";
@@ -9,8 +9,8 @@ import AddressCard from "../AddressCard/AddressCard";
 
 const PaymentSuccess = () => {
   const [paymentId, setPaymentId] = useState<string | null>("");
-  const [referenceId, setReferenceId] = useState();
-  const [paymentStatus, setPaymentStatus] = useState<string | null>("");
+  // const [referenceId, setReferenceId] = useState();
+  const [_paymentStatus, setPaymentStatus] = useState<string | null>("");
   const { orderId } = useParams();
 
   const dispatch = useAppDispatch();
