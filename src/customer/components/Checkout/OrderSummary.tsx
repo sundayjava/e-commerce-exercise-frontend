@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 import { useEffect } from "react";
 import { getOrderById } from "../../../state/order/Action";
 import { useLocation } from "react-router-dom";
+import { createPayment } from "../../../state/payment/Action";
 
 const OrderSummary = () => {
   const dispatch = useAppDispatch();
@@ -12,11 +13,15 @@ const OrderSummary = () => {
   const searchParams = new URLSearchParams(location.search);
   const { order } = useAppSelector((state) => state);
 
-  const order_id = searchParams.get("order_id");
+  const orderId = searchParams.get("order_id");
 
   useEffect(() => {
-    dispatch(getOrderById(order_id));
-  }, [order_id]);
+    dispatch(getOrderById(orderId));
+  }, [orderId]);
+
+  const handleCheckout = () => {
+    dispatch(createPayment(orderId))
+  }
 
   return (
     <div>
@@ -60,6 +65,7 @@ const OrderSummary = () => {
                 variant="contained"
                 className="w-full mt-5"
                 sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#9155fd" }}
+                onClick={handleCheckout}
               >
                 Checkout
               </Button>
